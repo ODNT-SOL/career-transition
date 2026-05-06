@@ -1,0 +1,58 @@
+{
+  "name": "Brandy",
+  "email": "[Email]",
+  "phone": "[Phone]",
+  "linkedin": "[LinkedIn]",
+  "location": "Texas",
+  "roles": [
+    "Operations & Business Analyst",
+    "Customer Success",
+    "Process Optimization"
+  ],
+  "summary": "Results-driven operations professional with 8+ years of experience supporting high-volume business environments, optimizing workflows, and improving team performance. Proven ability to analyze data, build scalable processes, and develop training systems that enhance productivity and operational efficiency. Strong background in cross-functional collaboration, customer engagement, and remote team coordination.",
+  "experience": [
+    {
+      "title": "Operations Specialist / Senior Agent Support",
+      "company": "Insurance Company",
+      "location": "Texas",
+      "dates": "2014 – Present",
+      "bullets": [
+        "Analyzed and organized operational data to track agent performance, pipeline health, and business outcomes",
+        "Built and maintained agent pipelines, improving visibility into workflow and increasing efficiency across teams",
+        "Conducted internal audits to ensure compliance, accuracy, and process consistency",
+        "Developed templates, SOPs, and training manuals to standardize onboarding and daily operations",
+        "Led training sessions and supported new team members, reducing onboarding friction and improving ramp-up time",
+        "Managed high-volume customer interactions across phone, virtual, and in-person channels while maintaining strong satisfaction",
+        "Facilitated and led Zoom meetings, driving team alignment and effective communication in remote environments",
+        "Collaborated with leadership to identify workflow inefficiencies and implement process improvements",
+        "Maintained productivity and performance in a fast-paced, high-demand environment with competing priorities"
+      ]
+    }
+  ],
+  "additional_experience": [
+    {
+      "title": "Team Collaboration & Technical Training",
+      "description": "Full-stack engineering certification program with emphasis on collaboration and agile workflows. Led group discussions and contributed to team problem-solving sessions. Gained experience in structured thinking, system design, and technical communication."
+    }
+  ],
+  "skills": {
+    "Operations & Business": [
+      "Data Analysis & Reporting",
+      "Pipeline / Workflow Management",
+      "Process Improvement",
+      "Documentation & SOP Development",
+      "Training & Onboarding"
+    ],
+    "Tools & Technology": [
+      "Microsoft Excel",
+      "Microsoft Outlook",
+      "Zoom / Remote Collaboration Tools"
+    ],
+    "Core Strengths": [
+      "Problem-Solving & Critical Thinking",
+      "Communication (Verbal & Written)",
+      "Team Collaboration",
+      "Time Management in High-Pressure Environments"
+    ]
+  }
+}
