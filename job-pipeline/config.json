@@ -1,0 +1,7 @@
+{
+  "search_terms": ["software engineer", "frontend developer", "backend developer", "full stack developer", "web developer"],
+  "locations": ["remote", "hybrid"],
+  "exclude_keywords": ["insurance", "state farm", "allstate", "geico", "prudential", "agent", "insurance sales"],
+  "experience_levels": ["entry", "junior", "associate"],
+  "output_file": "tracker.csv"
+}
