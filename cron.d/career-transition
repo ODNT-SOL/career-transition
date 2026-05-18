@@ -1,0 +1,9 @@
+# Job Pipeline Automation - Cron Setup
+# Run daily at 9:00 AM
+0 9 * * * chronos cd /home/chronos/career-transition && .venv/bin/python job-pipeline/job_search.py >> job-pipeline/cron.log 2>&1
+
+# Outreach Engine - Check and send followups daily at 10:00 AM
+0 10 * * * chronos cd /home/chronos/career-transition && .venv/bin/python outreach-engine/outreach_engine.py --db outreach-engine/outreach.db send-followups >> outreach-engine/cron.log 2>&1
+
+# Weekly Optimizer - Generate report every Monday at 10:00 AM
+0 10 * * 1 chronos cd /home/chronos/career-transition && .venv/bin/python weekly-optimizer/optimizer.py --activities weekly-optimizer/activities.jsonl report --output weekly-optimizer/weekly-reports/$(date +\%Y-\%m-\%d).pdf >> weekly-optimizer/cron.log 2>&1

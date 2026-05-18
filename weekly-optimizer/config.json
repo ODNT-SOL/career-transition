@@ -1,0 +1,26 @@
+{
+  "report_title": "Weekly Job Search Report",
+  "author": "Brandy",
+  "report_output": "weekly-report.pdf",
+  "activities_file": "activities.jsonl",
+  "thresholds": {
+    "low_response_rate": 0.1,
+    "good_response_rate": 0.25,
+    "low_interview_rate": 0.05,
+    "good_interview_rate": 0.15
+  },
+  "diagnosis_rules": [
+    {
+      "condition": "response_rate < 0.1",
+      "recommendation": "Your response rate is low. Consider: (1) Customizing cover letters more, (2) Targeting roles closer to your experience, (3) Expanding to adjacent job titles."
+    },
+    {
+      "condition": "interview_rate < 0.05",
+      "recommendation": "Interview rate is very low. Consider: (1) Resume optimization, (2) Applying to more roles, (3) Reviewing job descriptions for keyword alignment."
+    },
+    {
+      "condition": "response_rate >= 0.25 and outreach_reply_rate >= 0.3",
+      "recommendation": "Great response rates! Maintain current strategy and focus on interview preparation."
+    }
+  ]
+}

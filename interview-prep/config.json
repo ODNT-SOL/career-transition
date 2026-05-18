@@ -1,0 +1,8 @@
+{
+  "candidate_name": "Brandy",
+  "current_role": "Software Engineer",
+  "target_role": "Senior Software Engineer",
+  "key_skills": ["Python", "JavaScript", "React", "Node.js", "AWS"],
+  "years_experience": 3,
+  "output_file": "interview-prep.pdf"
+}

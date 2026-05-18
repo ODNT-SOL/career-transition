@@ -61,19 +61,114 @@ class JobSearcher:
 
 
 class LinkedInJobSearcher(JobSearcher):
-    """Search LinkedIn Jobs (uses scraping)."""
-    
+    """Search LinkedIn Jobs via scraping."""
+
+    USER_AGENTS = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    ]
+    _ua_index = 0
+
+    def _get_headers(self) -> dict:
+        """Return rotated User-Agent headers."""
+        ua = self.USER_AGENTS[self._ua_index % len(self.USER_AGENTS)]
+        self._ua_index += 1
+        return {
+            "User-Agent": ua,
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Connection": "keep-alive",
+        }
+
     def search(self, config: JobSearchConfig) -> list[Job]:
         jobs = []
-        
-        # Note: LinkedIn has strict anti-scraping. Using mock for demo.
-        # In production, use LinkedIn API or official job search.
+        max_results = config.get("linkedin", {}).get("max_results_per_term", 25)
+
         for term in config.get("search_terms", []):
-            # This would be actual API calls in production
-            # For now, return sample data structure
-            pass
-        
+            for location in config.get("locations", []):
+                # Build LinkedIn Jobs search URL
+                # f_WT=2 = remote, f_E=1,2 = entry-level
+                url = "https://www.linkedin.com/jobs/search/"
+                params = {
+                    "keywords": term,
+                    "location": location,
+                    "f_TPR": "r2592000",  # past 30 days
+                    "f_WT": "2",  # remote
+                    "f_E": "1,2",  # entry-level, associate
+                    "start": 0,
+                }
+
+                try:
+                    response = requests.get(
+                        url, params=params, headers=self._get_headers(), timeout=15
+                    )
+                    if response.status_code != 200:
+                        continue
+
+                    soup = BeautifulSoup(response.text, "lxml")
+
+                    # LinkedIn job cards use .job-search-card
+                    for job_card in soup.select(".job-search-card"):
+                        try:
+                            title_elem = job_card.select_one(".job-search-card__title")
+                            if not title_elem:
+                                continue
+
+                            title = title_elem.get_text(strip=True)
+
+                            # Company
+                            company_elem = job_card.select_one(".job-search-card__company-name")
+                            company = company_elem.get_text(strip=True) if company_elem else "Unknown"
+
+                            if self._should_exclude(company, config):
+                                continue
+
+                            # Location
+                            location_elem = job_card.select_one(".job-search-card__location")
+                            loc_text = location_elem.get_text(strip=True) if location_elem else "Unknown"
+
+                            # Date posted
+                            date_elem = job_card.select_one(".job-search-card__list-date")
+                            date_posted = date_elem.get_text(strip=True) if date_elem else ""
+
+                            # Job URL
+                            job_url = ""
+                            if title_elem and title_elem.a:
+                                job_url = title_elem.a.get("href", "")
+                            elif job_card and job_card.a:
+                                job_url = job_card.a.get("href", "")
+
+                            if len(jobs) >= max_results:
+                                break
+
+                            jobs.append(Job(
+                                title=title,
+                                company=company,
+                                location=loc_text,
+                                url=job_url,
+                                source="LinkedIn",
+                                date_posted=date_posted,
+                            ))
+                        except Exception:
+                            continue
+
+                    # Respect rate limit
+                    import time
+                    time.sleep(2)
+
+                except Exception as e:
+                    print(f"Error searching LinkedIn: {e}", file=sys.stderr)
+
         return jobs
+
+    def _should_exclude(self, company: str, config: JobSearchConfig) -> bool:
+        """Check if job should be excluded based on filters."""
+        company_lower = company.lower()
+        for exclude in config.get("exclude_keywords", []):
+            if exclude.lower() in company_lower:
+                return True
+        return False
 
 
 class IndeedJobSearcher(JobSearcher):

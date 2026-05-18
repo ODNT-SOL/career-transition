@@ -1,0 +1,21 @@
+{
+  "templates": {
+    "initial": {
+      "subject": "Re: {job_title} opportunity at {company}",
+      "body": "Hi {first_name},\n\nI came across the {job_title} role at {company} and am very interested. As a {my_title} with experience in {my_skills}, I believe I'd be a strong fit.\n\nWould love to connect and discuss further.\n\nBest,\n{my_name}"
+    },
+    "followup_1": {
+      "subject": "Re: {job_title} opportunity at {company} - Following up",
+      "body": "Hi {first_name},\n\nJust wanted to follow up on my earlier message about the {job_title} position. I'd love to discuss how my background in {my_skills} could contribute to {company}.\n\nBest,\n{my_name}"
+    },
+    "followup_2": {
+      "subject": "Re: {job_title} at {company}",
+      "body": "Hi {first_name},\n\nLast check-in on this — still very interested in the {job_title} role. Happy to share my resume or schedule a call at your convenience.\n\nBest,\n{my_name}"
+    }
+  },
+  "followup_days": [3, 7, 14],
+  "my_name": "Brandy",
+  "my_title": "Software Engineer",
+  "my_skills": "Python, JavaScript, React, Node.js",
+  "database": "outreach.db"
+}

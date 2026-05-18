@@ -1,0 +1,33 @@
+name: Job Pipeline CI
+
+on:
+  push:
+    paths:
+      - "job-pipeline/**"
+      - ".github/workflows/job-pipeline-ci.yml"
+  pull_request:
+    paths:
+      - "job-pipeline/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install --upgrade pip
+          .venv/bin/pip install requests beautifulsoup4 lxml pytest
+
+      - name: Run tests
+        run: .venv/bin/python -m pytest job-pipeline/test_job_search.py -v
+
+      - name: CLI smoke test
+        run: .venv/bin/python job-pipeline/job_search.py --help
